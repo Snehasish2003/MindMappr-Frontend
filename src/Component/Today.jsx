@@ -1,3 +1,5 @@
+import {  EllipsisVertical, Pencil, Trash } from "lucide-react";
+
 const Today = () => {
 
     const tasks = [
@@ -103,16 +105,12 @@ const Today = () => {
                     {tasks.map((task, index) => (
                         <div className="space-y-1 p-3 rounded-lg bg-white shadow" key={index}>
                             <div className="flex justify-between">
-                                <h3 className="text-lg font-bold">{task.name}</h3>
-                                {task.status == "in-progress" &&
-                                    <div className="text-center bg-gray-400 w-30   p-2 md:p-3 rounded-lg">{task.status}</div>
-                                }
-                                {task.status == "Pending" &&
-                                    <div className="text-center w-30 bg-red-400 p-2 md:p-3 rounded-lg">{task.status}</div>
-                                }
-                                {task.status == "Completed" &&
-                                    <div className="text-center w-30 bg-green-400  p-2 md:p-3 rounded-lg">{task.status}</div>
-                                }
+                            <h3 className="text-lg font-bold">{task.name}</h3>
+                                <span className="flex space-x-2">
+                                    <Pencil size={19} className="cursor-pointer" />
+                                    <Trash size={20} className="cursor-pointer"/>
+                                    <EllipsisVertical size={20} className="cursor-pointer"/>
+                                </span>
                             </div>
                             <h4 className="text-sm text-gray-700 ">{task.description}</h4>
                             <div className="text-sm text-gray-500">
@@ -144,6 +142,24 @@ const Today = () => {
                                         day: "numeric",
                                     })}
                                 </span>
+                            </div>
+                            <div className="text-sm text-gray-500">
+                                <label htmlFor={`status-${index}`} className="mr-2 font-medium">status:</label>
+                                {   task.status == "in-progress" &&
+                                    <span id={`status-${index}`} className="text-yellow-500" >
+                                        {task.status}
+                                    </span>
+                                }
+                                {   task.status == "Pending" &&
+                                    <span id={`status-${index}`} className="text-gray-500" >
+                                        {task.status}
+                                    </span>
+                                }
+                                {   task.status == "Completed" &&
+                                    <span id={`status-${index}`} className="text-green-500" >
+                                        {task.status}
+                                    </span>
+                                }
                             </div>
                         </div>
                     ))}
