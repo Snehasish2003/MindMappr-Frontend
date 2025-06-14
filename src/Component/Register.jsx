@@ -1,6 +1,38 @@
+import axios from "axios";
 import { Facebook, Github, Instagram } from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+    const navigate = useNavigate();
+    const [formData, setFormData] = useState({
+        email: "",
+        password: "",
+        userName: "",
+    });
+
+    const handleFormData = (e) => {
+        const { name, value } = e.target;
+        setFormData((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const handelSubmit =async()=>{
+       try {
+         const response = await axios.post("http://localhost:8084/user/create",formData);
+        if(response!=null){
+            console.log(response.data);
+           if(response.data.data.statusCode==200){
+                navigate("/login");
+           }
+            
+        }
+       } catch (error) {
+        console.log(error);
+       }
+    }
     return (
         <section className="relative min-h-screen flex items-center justify-center px-4">
             <div className="max-w-4xl p-10 z-10 flex flex-col items-center justify-center space-y-16">
@@ -26,10 +58,13 @@ const Register = () => {
 
                     {/* Email Input */}
                     <div className="flex flex-col w-full space-y-2 text-left text-lg">
-                        <label htmlFor="name">Full name</label>
+                        <label htmlFor="name">User name</label>
                         <input
                             id="name"
                             type="text"
+                            name="userName"
+                            value={formData.userName}
+                            onChange={handleFormData}
                             placeholder=""
                             className="w-full h-10 p-3 border-2 border-black text-gray-600 rounded-md"
                         />
@@ -37,20 +72,24 @@ const Register = () => {
                         <input
                             id="email"
                             type="email"
-
+                            name="email"
+                            value={formData.email}
+                            onChange={handleFormData}
                             className="w-full h-10 p-3 border-2 border-black text-gray-600 rounded-md"
                         />
                         <label htmlFor="password">Password</label>
                         <input
                             id="password"
                             type="password"
-
+                            name="password"
+                            value={formData.password}
+                            onChange={handleFormData}
                             className="w-full h-10 p-3 border-2 border-black text-gray-600 rounded-md"
                         />
                     </div>
 
                     {/* Submit Button */}
-                    <button className="w-full h-12 bg-primary text-foreground text-xl font-semibold rounded-md hover:opacity-90 transition">
+                    <button className="w-full h-12 bg-primary text-foreground text-xl font-semibold rounded-md hover:opacity-90 transition "onClick={handelSubmit}>
                         Next
                     </button>
 

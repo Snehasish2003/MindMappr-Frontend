@@ -4,7 +4,11 @@ import Today from "../Component/Today";
 import ToggleTheme from "../Component/ToggleTheme";
 import Addicon from "../Component/Addicon";
 
+
 const MindMappr = () => {
+    
+    
+
     const [isSelected, setIsSelected] = useState("Today");
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
     const renderComponent = () => {
@@ -27,7 +31,7 @@ const MindMappr = () => {
         <>
             <ToggleTheme />
             <div className="flex min-h-screen">
-                <Sidebar isSelected={isSelected} setIsSelected={setIsSelected} setIsSidebarOpen={setIsSidebarOpen} isSidebarOpen={isSidebarOpen} />
+                <Sidebar  isSelected={isSelected} setIsSelected={setIsSelected} setIsSidebarOpen={setIsSidebarOpen} isSidebarOpen={isSidebarOpen} />
                 <div
                     className={`transition-all duration-500 ease-in-out w-full ${isSidebarOpen ? "md:ml-[22rem]" : "ml-0"
                         }`}

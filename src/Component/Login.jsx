@@ -1,6 +1,40 @@
+import axios from "axios";
 import { Facebook, Github, Instagram } from "lucide-react";
+import { useState } from "react";
+import {useNavigate } from "react-router-dom";
 
 const Login = () => {
+  
+  const navigate = useNavigate();
+
+  const [formData,setFormData] = useState({
+    email:"",
+    password:"",
+  });
+
+  const handleFormData = (event)=>{
+      const {name,value} = event.target;
+      setFormData((prev)=>({
+        ...prev,
+        [name]:value,
+      }));
+  }
+
+  const handleLogin = async()=>{
+    try {
+       const response = await axios.post("http://localhost:8084/user/login",formData);
+    if(response.data.statusCode==200){
+      localStorage.setItem("taskToken", response.data.data);
+      navigate("/mindmappr");
+    }else{
+      console.log(response.data.message);
+    }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4">
       <div className="max-w-4xl p-10 z-10 flex flex-col items-center justify-center space-y-16">
@@ -21,7 +55,7 @@ const Login = () => {
           {/* Login Text */}
           <div className="flex text-xl md:text-2xl font-semibold text-foreground tracking-tighter">
             <span>Login or&nbsp;</span>
-            <span className="cursor-pointer underline">create an account</span>
+            <a href="/register" className="cursor-pointer underline">create an account</a>
           </div>
 
           {/* Email Input */}
@@ -30,14 +64,27 @@ const Login = () => {
             <input
               id="email"
               type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleFormData}
               placeholder="example@gmail.com"
+              className="w-full h-10 p-3 border-2 border-black text-gray-600 rounded-md"
+            />
+            <label htmlFor="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleFormData}
+              placeholder="password"
               className="w-full h-10 p-3 border-2 border-black text-gray-600 rounded-md"
             />
           </div>
 
           {/* Submit Button */}
-          <button className="w-full h-12 bg-primary text-foreground text-xl font-semibold rounded-md hover:opacity-90 transition">
-            Next
+          <button className="w-full hover:cursor-pointer h-12 bg-primary text-foreground text-xl font-semibold rounded-md hover:opacity-90 transition" onClick={handleLogin}>
+            login
           </button>
 
           {/* Divider */}

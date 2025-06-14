@@ -11,6 +11,7 @@ import {
   User,
 } from "lucide-react";
 import { useState } from "react";
+import { useUser } from "../Context/UserContext";
 
 // Sidebar item component
 const SidebarItem = ({ item, isSelected, onClick }) => (
@@ -28,8 +29,8 @@ const SidebarItem = ({ item, isSelected, onClick }) => (
 );
 
 const Sidebar = ({isSelected,isSidebarOpen,setIsSelected,setIsSidebarOpen}) => {
+    const {user,isLoading} = useUser();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
-
   const items = [
     { label: "Add task", name: "addTask", icon: Plus },
     { label: "Search", name: "search", icon: Search },
@@ -40,7 +41,7 @@ const Sidebar = ({isSelected,isSidebarOpen,setIsSelected,setIsSidebarOpen}) => {
 
   const toggleSidebar = () => {setIsSidebarOpen(!isSidebarOpen); setIsProfileOpen(false) };
   const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
-
+  // console.log(user);
   return (
     <aside className="fixed flex-shrink-0 w-90 min-h-screen max-w-sm z-40">
       {!isSidebarOpen && (
@@ -63,7 +64,7 @@ const Sidebar = ({isSelected,isSidebarOpen,setIsSelected,setIsSidebarOpen}) => {
             onClick={toggleProfile}
           >
             <User size={24} />
-            <h1 className="text-lg font-bold">Subhsne</h1>
+            <h1 className="text-lg font-bold">{isLoading ? "Loading..." : user?.userName || "Guest"}</h1>
             <ChevronDown size={24} />
           </div>
           {/* profile */}

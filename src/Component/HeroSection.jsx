@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router-dom";
 import  heroimage from "../assets/image.png";
 
 const HeroSection = ()=>{
+    const navigate = useNavigate();
     return (
         <section className="relative min-h-screen flex flex-col items-center justify-center md:flex-row px-4 space-y-10 ">
                 {/* <div className=""> Master Your Tasks, One Challenge at a Time</div>
@@ -17,7 +19,7 @@ const HeroSection = ()=>{
                               Add your goals, track your progress, and let AI challenge you daily
                             </span> 
                          </h1>
-                         <button className="bg-primary rounded-2xl w-40 h-12 cursor-pointer animate-bounce delay-300">
+                         <button className="bg-primary rounded-2xl w-40 h-12 cursor-pointer animate-bounce delay-300" onClick={()=> navigate("/login")}>
                             Get Started
                          </button>
                     </div>
